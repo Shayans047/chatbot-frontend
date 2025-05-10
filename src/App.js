@@ -7,6 +7,7 @@ function App() {
   const [question, setQuestion] = useState('');
   const [response, setResponse] = useState('');
   const [status, setStatus] = useState('');
+  const [isFileUploaded, setIsFileUploaded] = useState(false); // Track if CV is uploaded
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -33,11 +34,38 @@ function App() {
         },
       });
 
+      setIsFileUploaded(true); // File uploaded successfully
       setStatus(res.data.status || '✅ File uploaded successfully!');
     } catch (error) {
       console.error('Upload error:', error);
       const errMsg =
         error.response?.data?.error || '❌ Error uploading file. Check backend logs.';
+      setStatus(errMsg);
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (!file) {
+      setStatus('⚠️ Please select a file to update.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await axios.put('http://127.0.0.1:8000/api/upload/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      setIsFileUploaded(true); // File updated successfully
+      setStatus(res.data.status || '✅ File updated successfully!');
+    } catch (error) {
+      console.error('Update error:', error);
+      const errMsg =
+        error.response?.data?.error || '❌ Error updating file. Check backend logs.';
       setStatus(errMsg);
     }
   };
@@ -66,6 +94,7 @@ function App() {
       setResponse('');
       setQuestion('');
       setFile(null);
+      setIsFileUploaded(false); // Reset file upload state
     } catch (error) {
       console.error('Delete error:', error);
       const errMsg =
@@ -77,10 +106,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2>📄 Upload Resume to CV Chatbot</h2>
+        <h2>📄 Upload or Update Resume for CV Chatbot</h2>
         <input type="file" accept=".pdf,.docx" onChange={handleFileChange} />
-        <button onClick={handleUpload} disabled={!file}>
+        <button onClick={handleUpload} disabled={!file || isFileUploaded}>
           Upload
+        </button>
+        <button onClick={handleUpdate} disabled={!file || !isFileUploaded}>
+          Update
         </button>
         <button onClick={handleDelete} style={{ marginLeft: '10px' }}>
           Delete Resume

@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #20232a;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -19,7 +22,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 40px 20px;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -35,4 +39,89 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* ---------- Buttons ---------- */
+button {
+  padding: 12px 25px;
+  margin: 10px 8px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+button.delete-btn {
+  background-color: #dc3545;
+}
+
+button.delete-btn:hover {
+  background-color: #b02a37;
+}
+
+/* File input section */
+.file-input-wrapper {
+  margin-bottom: 20px;
+}
+
+input[type="file"] {
+  margin-top: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Ask input styling */
+.ask-section {
+  margin-top: 20px;
+}
+
+input[type="text"] {
+  width: 60%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-top: 10px;
+}
+
+.ask-section button {
+  padding: 12px 25px;
+  margin-left: 10px;
+}
+
+/* Status and response boxes */
+.status, .response {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #333;
+  color: #ddd;
+  width: 70%;
+  max-width: 600px;
+  text-align: left;
+}
+
+/* Divider */
+.divider {
+  width: 80%;
+  margin: 20px auto;
 }
